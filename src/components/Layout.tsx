@@ -1,13 +1,15 @@
 import Navbar from "./NavBar";
+import SideBar from "./SideBar";
 
 const Layout = ({ children }: any) => {
   return (
-    <>
-      <div>
-        <Navbar />
+    <div>
+      <Navbar />
+      <div className="flex">
+        <SideBar />
+        {children}
       </div>
-      <main>{children}</main>
-    </>
+    </div>
   );
 };
 

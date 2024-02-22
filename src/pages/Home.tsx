@@ -1,17 +1,11 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import DashboardHeader from "../components/dashboard/DashboardHeader";
 
 const Home = () => {
-  const [post, setPost] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/user/18").then((data: any) => {
-      console.log(data);
-      setPost(data?.data);
-    });
-  }, []);
-
-  return <div></div>;
+  return (
+    <div>
+      <DashboardHeader />
+    </div>
+  );
 };
 
 export default Home;
