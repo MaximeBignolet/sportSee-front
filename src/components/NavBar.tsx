@@ -11,32 +11,28 @@ const Navbar = () => {
   ];
 
   return (
-    <>
-      <div className="w-full bg-black h-20 shadow-md">
-        <div className="flex gap-3 items-center mt-auto h-full ml-5">
-          <div className="flex items-center gap-2 w-1/5">
-            <img src={logo} alt="" className=" h-14" />
-            <h1 className="text-[#E60000] text-2xl font-extralight">
-              SportSee
-            </h1>
-          </div>
-          <nav className="w-2/3">
-            <ul className="flex justify-between">
-              {navigationItems.map((item) => (
-                <li className="text-white text-2xl font-light" key={item.id}>
-                  <NavLink
-                    to={item.path}
-                    className="hover:text-red-400 link link-underline link-underline-black"
-                  >
-                    {item.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+    <div className="w-full bg-black h-20 nav-shadow ">
+      <div className="flex gap-3 items-center mt-auto h-full ml-5">
+        <div className="flex items-center gap-2 w-1/5">
+          <img src={logo} alt="" className=" h-14" />
+          <h1 className="text-[#E60000] text-2xl font-extralight">SportSee</h1>
         </div>
+        <nav className="w-2/3">
+          <ul className="flex justify-between">
+            {navigationItems.map((item) => (
+              <li className="text-white text-2xl font-light" key={item.id}>
+                <NavLink
+                  to={item.path}
+                  className="hover:text-red-400 link link-underline link-underline-black"
+                >
+                  {item.title}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
-    </>
+    </div>
   );
 };
 
