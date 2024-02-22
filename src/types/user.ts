@@ -13,3 +13,14 @@ export type User = {
     lastName: number;
   };
 };
+
+export type UserActivity = {
+  sessions: [
+    {
+      calories: number;
+      day: string;
+      kilogram: number;
+    }
+  ];
+  userId: number;
+};

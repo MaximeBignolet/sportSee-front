@@ -9,9 +9,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userData }) => {
   return (
     <div>
       <div>
-        <h2 className="text-4xl font-bold">
+        <h2 className="text-5xl font-bold">
           Bonjour
-          <span className="text-[#FF0101] font-medium">
+          <span className="text-[#FF0101] font-medium inline-block ml-2">
             {userData?.userInfos.firstName}
           </span>
         </h2>
