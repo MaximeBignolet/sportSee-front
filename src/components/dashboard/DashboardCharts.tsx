@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchUserDataActivityData } from "../../services/fetchUserActivityData";
+import { fetchUserDataActivityData } from "../../services/userServices.ts";
 import { UserActivity } from "../../types/user";
 import {
   Bar,
