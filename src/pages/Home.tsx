@@ -8,7 +8,7 @@ const Home = () => {
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     fetchUserData(18).then((data) => {
-      setUser(data?.data.data);
+      setUser(data.data);
     });
   }, []);
   return (
