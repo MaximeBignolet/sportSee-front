@@ -22,3 +22,24 @@ export const fetchUserDataActivityData = async (userId: number) => {
     return null;
   }
 };
+
+
+export const fetchUserAverageSessions = async (userId: number) => {
+  try {
+    const resp = await axios.get(`${baseUrl}/user/${userId}/average-sessions`)
+    return resp;
+  }catch (e){
+    console.log(e)
+    return null;
+  }
+}
+
+export const fetchUserPerf = async (userId: number) => {
+  try {
+    const resp = await axios.get(`${baseUrl}/user/${userId}/performance`)
+    return resp;
+  } catch (e) {
+    console.log(e)
+    return null;
+  }
+}

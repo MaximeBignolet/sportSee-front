@@ -21,7 +21,7 @@ const DashboardCharts = () => {
 
   return (
     <div className="p-4 mt-[10%]  bg-[#FBFBFB] w-fit">
-      <BarChart width={835} height={320} data={userActivity?.sessions}>
+      <BarChart width={900} height={320} data={userActivity?.sessions}>
         <CartesianGrid strokeDasharray="1 1" vertical={false} />
         <XAxis dataKey="day" />
         <YAxis orientation="right" axisLine={false} />
