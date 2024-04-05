@@ -4,15 +4,23 @@ import {fetchUserAverageSessions} from "../../services/userServices.ts";
 import {Line, LineChart, Tooltip, XAxis} from "recharts";
 import {DashboardRadar} from "./DashboardRadar.tsx";
 
+
 export function DashboardCoMainCharts() {
     const [userSession, setUserSession] = useState<UserAverageSession | null>(null);
 
     useEffect(() => {
         fetchUserAverageSessions(18).then((data) => {
-            setUserSession(data?.data.data);
+            const daysMap = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+            const sessionsWithFormattedDay = data?.data.data.sessions.map((session: any) => ({
+                ...session,
+                day: daysMap[session.day - 1]
+            }))
+            setUserSession({
+                ...data?.data.data,
+                sessions: sessionsWithFormattedDay
+            });
         });
     }, []);
-
     return (
         <div className={"flex justify-between"}>
             <LineChart width={280} height={250} data={userSession?.sessions} className="bg-[#F00] p-3 rounded-md">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchUserDataActivityData } from "../../services/userServices.ts";
 import { UserActivity } from "../../types/user";
+import { format } from 'date-fns'
 import {
   Bar,
   BarChart,
@@ -11,19 +12,28 @@ import {
   YAxis,
 } from "recharts";
 
+
 const DashboardCharts = () => {
   const [userActivity, setUserActivity] = useState<UserActivity | null>(null);
+
+
+
   useEffect(() => {
     fetchUserDataActivityData(18).then((data) => {
-      setUserActivity(data?.data.data);
+      const formattedData = data?.data.data.sessions.map((session: any) => ({
+        ...session,
+        day: format(new Date(session.day), 'd')
+      }))
+      setUserActivity({...data?.data.data, sessions: formattedData});
     });
   }, []);
+
 
   return (
     <div className="p-4 mt-[10%]  bg-[#FBFBFB] w-fit">
       <BarChart width={900} height={320} data={userActivity?.sessions}>
         <CartesianGrid strokeDasharray="1 1" vertical={false} />
-        <XAxis dataKey="day" />
+        <XAxis dataKey="day" tickLine={false}/>
         <YAxis orientation="right" axisLine={false} />
         <text
           x="9.5%"
