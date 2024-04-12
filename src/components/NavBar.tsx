@@ -11,7 +11,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="w-full bg-black h-20 nav-shadow ">
+    <div className="w-screen bg-black h-20 nav-shadow ">
       <div className="flex gap-3 items-center mt-auto h-full ml-5">
         <div className="flex items-center gap-2 w-1/5">
           <img src={logo} alt="" className=" h-14" />
