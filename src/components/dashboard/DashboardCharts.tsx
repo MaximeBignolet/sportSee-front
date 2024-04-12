@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchUserDataActivityData } from "../../services/userServices.ts";
-import { UserActivity } from "../../types/user";
-import { format } from 'date-fns'
+import { SessionsUserActivity, UserActivity } from "../../types/user";
+import { format } from "date-fns";
 import {
   Bar,
   BarChart,
@@ -12,28 +12,41 @@ import {
   YAxis,
 } from "recharts";
 
-
 const DashboardCharts = () => {
   const [userActivity, setUserActivity] = useState<UserActivity | null>(null);
-
-
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     fetchUserDataActivityData(18).then((data) => {
-      const formattedData = data?.data.data.sessions.map((session: any) => ({
-        ...session,
-        day: format(new Date(session.day), 'd')
-      }))
-      setUserActivity({...data?.data.data, sessions: formattedData});
+      const formattedData: UserActivity = data?.data.data.sessions.map(
+        (session: SessionsUserActivity) => ({
+          ...session,
+          day: format(new Date(session.day), "d"),
+        })
+      );
+      setUserActivity({ ...data?.data.data, sessions: formattedData });
     });
+
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
-
   return (
-    <div className="p-4 mt-[10%]  bg-[#FBFBFB] w-fit">
-      <BarChart width={900} height={320} data={userActivity?.sessions}>
+    <div className="p-4 xl:mt-[10%] lg:pt-[3%]  bg-[#FBFBFB] w-fit">
+      <BarChart
+        width={width > 1024 ? 900 : 750}
+        height={320}
+        data={userActivity?.sessions}
+      >
         <CartesianGrid strokeDasharray="1 1" vertical={false} />
-        <XAxis dataKey="day" tickLine={false}/>
+        <XAxis dataKey="day" tickLine={false} />
         <YAxis orientation="right" axisLine={false} />
         <text
           x="9.5%"

@@ -1,47 +1,44 @@
 export type User = {
-    id: number;
-    keyData: {
-        calorieCount: number;
-        carbohydrateCount: number;
-        lipidCount: number;
-        proteinCount: number;
-    };
-    score: number;
-    userInfos: {
-        age: number;
-        firstName: number;
-        lastName: number;
-    };
+  id: number;
+  keyData: {
+    calorieCount: number;
+    carbohydrateCount: number;
+    lipidCount: number;
+    proteinCount: number;
+  };
+  score: number;
+  userInfos: {
+    age: number;
+    firstName: string;
+    lastName: string;
+  };
+};
+
+export type SessionsUserActivity = {
+  calories: number;
+  day: string;
+  kilogram: number;
 };
 
 export type UserActivity = {
-    sessions: [
-        {
-            calories: number;
-            day: string;
-            kilogram: number;
-        }
-    ];
-    userId: number;
+  sessions: SessionsUserActivity[];
+  userId: number;
+};
+
+export type AverageUserSessionArray = {
+  day: number;
+  sessionLength: string;
 };
 
 export type UserAverageSession = {
-    userId: number,
-    sessions: [
-        {
-            day: number;
-            sessionLength: string;
-        }
-    ];
-}
+  userId: number;
+  sessions: AverageUserSessionArray[];
+};
 
 export type UserPerformance = {
-    data: {
-        "userId": number,
-        "kind": object,
-    },
-    kind: [
-        value: number,
-        kind:number
-    ]
-}
+  data: {
+    userId: number;
+    kind: object;
+  };
+  kind: [value: number, kind: number];
+};

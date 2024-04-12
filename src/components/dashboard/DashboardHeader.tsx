@@ -7,7 +7,7 @@ type DashboardHeaderProps = {
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userData }) => {
   return (
-    <div>
+    <div className="lg:pt-5 xl:pt-0">
       <div>
         <h2 className="text-5xl font-bold">
           Bonjour
