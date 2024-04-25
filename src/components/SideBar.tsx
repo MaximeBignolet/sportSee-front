@@ -12,7 +12,7 @@ const SideBar = () => {
     { path: iconMuscle, id: 2, name: "Icône musculation" },
   ];
   return (
-    <div className="xl:h-[92vh] lh:h-screen bg-black lg:w-fit xl:w-28">
+    <div className="xl:h-[92.5vh] lg:h-screen bg-black lg:w-fit xl:w-28">
       <nav className="h-2/3">
         <ul className="flex flex-col items-center justify-center h-full gap-5">
           {iconsItems.map((icon) => (

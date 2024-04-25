@@ -12,9 +12,11 @@ const Home = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetchUserData(id).then((data) => {
-      setUser(data);
-    });
+    if (id) {
+      fetchUserData(id).then((data) => {
+        setUser(data);
+      });
+    }
   }, [id]);
 
   return (
@@ -27,7 +29,11 @@ const Home = () => {
       <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col">
         <div className="flex flex-col gap-5">
           <DashboardCharts />
-          <DashboardCoMainCharts userData={user} />
+          {user ? (
+            <DashboardCoMainCharts userData={user} />
+          ) : (
+            <p>Erreur dans la récupération des données</p>
+          )}
         </div>
         {user ? (
           <SideCard userData={user} />

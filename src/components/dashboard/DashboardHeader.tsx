@@ -11,9 +11,13 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userData }) => {
       <div>
         <h2 className="text-5xl font-bold">
           Bonjour
-          <span className="text-[#FF0101] font-medium inline-block ml-4">
-            {userData.firstname}
-          </span>
+          {userData ? (
+            <span className="text-[#FF0101] font-medium inline-block ml-4">
+              {userData.firstname}
+            </span>
+          ) : (
+            <p>Erreur dans la récupération du prénom</p>
+          )}
         </h2>
         <p className="pt-5">
           Félicitation ! Vous avez explosé vos objectifs hier 👏

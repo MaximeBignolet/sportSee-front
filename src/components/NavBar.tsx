@@ -4,7 +4,7 @@ import logo from "../assets/images/logo.png";
 
 const Navbar = () => {
   const navigationItems: Navigation[] = [
-    { title: "Accueil", path: "/", id: 1 },
+    { title: "Accueil", path: "/:id", id: 1 },
     { title: "Profil", path: "/Profil", id: 2 },
     { title: "Réglage", path: "/Reglage", id: 3 },
     { title: "Communauté", path: "/Communaute", id: 4 },

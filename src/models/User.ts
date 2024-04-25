@@ -47,10 +47,6 @@ export class User {
     });
   }
 
-  get caloriesToUsLocales() {
-    return this.calorieCount.toLocaleString("en-US");
-  }
-
   caloriesToLocales(locale: Intl.LocalesArgument) {
     return this.calorieCount.toLocaleString(locale);
   }
@@ -148,6 +144,15 @@ export class UserPerfomance {
   };
   data: Array<{ value: number; kind: number; kindDescription: string }>;
 
+  static kindTranslations: { [key: string]: string } = {
+    cardio: "cardio",
+    energy: "énergie",
+    endurance: "endurance",
+    strength: "force",
+    speed: "vitesse",
+    intensity: "intensité",
+  };
+
   constructor(params: {
     userId: number;
     kind: { [key: number]: string };
@@ -162,7 +167,7 @@ export class UserPerfomance {
     const transformedData = json.data.map((item: any) => ({
       value: item.value,
       kind: item.kind,
-      kindDescription: json.kind[item.kind] || "Unkwonw Kind",
+      kindDescription: UserPerfomance.kindTranslations[json.kind[item.kind]],
     }));
 
     return new UserPerfomance({
