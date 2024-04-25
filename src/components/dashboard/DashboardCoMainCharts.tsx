@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchUserAverageSessions } from "../../services/userServices.ts";
-import { Line, LineChart, Tooltip, XAxis } from "recharts";
+import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 import { DashboardRadar } from "./DashboardRadar.tsx";
 import DashboardPieChart from "./DashboardPieChart.tsx";
 import { useParams } from "react-router-dom";
@@ -45,19 +45,30 @@ const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
             className="bg-[#F00]  p-3 rounded-md"
           >
             <text
-              x="50%"
+              x="35%"
               y="7%"
               textAnchor="middle"
               style={{ fontWeight: 500 }}
-              fill={"white"}
+              fill={"rgba(255, 255, 255, 0.5)"}
             >
-              Durée moyenne des sessions
+              Durée moyenne{" "}
+              <tspan x="31%" dy="1.2em">
+                des sessions
+              </tspan>
             </text>
             <XAxis
               dataKey="day"
-              tick={{ fill: "white" }}
+              tick={{ fill: "rgba(255, 255, 255, 0.5)" }}
               axisLine={false}
               tickLine={false}
+            />
+            <YAxis
+              type="number"
+              domain={["dataMin", "dataMax + 15"]}
+              axisLine={false}
+              tickLine={false}
+              tick={false}
+              width={0}
             />
             <Tooltip />
             <Line
