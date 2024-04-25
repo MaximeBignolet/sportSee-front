@@ -1,20 +1,18 @@
 import { Cell, Pie, PieChart } from "recharts";
-import { User } from "../../types/user";
 import { useEffect, useState } from "react";
+import { User } from "../../models/User";
 
 type DashoardPieProps = {
-  userData: User | null;
+  userData: User;
 };
 
 const DashboardPieChart: React.FC<DashoardPieProps> = ({ userData }) => {
   let data: object[] = [];
   const [width, setWidth] = useState(window.innerWidth);
   if (userData?.score) {
-    const scorePercentage = userData?.score * 100;
-    const remainPercentage = 100 - scorePercentage;
     data = [
-      { id: "2", name: "L2", value: remainPercentage },
-      { id: "1", name: "L1", value: scorePercentage },
+      { id: "2", name: "L2", value: userData.userRemainPercentage },
+      { id: "1", name: "L1", value: userData.userScorePercentage },
     ];
   }
 
@@ -46,7 +44,7 @@ const DashboardPieChart: React.FC<DashoardPieProps> = ({ userData }) => {
           dominantBaseline="middle"
         >
           {userData ? (
-            <>{userData.score * 100}%</>
+            <>{userData.userScorePercentage}%</>
           ) : (
             <tspan x="150" dy="20">
               Erreur dans la récupération des données

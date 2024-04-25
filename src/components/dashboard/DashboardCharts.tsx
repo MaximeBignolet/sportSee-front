@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { fetchUserDataActivityData } from "../../services/userServices.ts";
-import { SessionsUserActivity, UserActivity } from "../../types/user";
-import { format } from "date-fns";
 import {
   Bar,
   BarChart,
@@ -11,20 +9,16 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useParams } from "react-router-dom";
+import { UserActivity } from "../../models/User.ts";
 
 const DashboardCharts = () => {
-  const [userActivity, setUserActivity] = useState<UserActivity | null>(null);
+  const [userActivity, setUserActivity] = useState<UserActivity>();
   const [width, setWidth] = useState(window.innerWidth);
-
+  const { id } = useParams();
   useEffect(() => {
-    fetchUserDataActivityData(18).then((data) => {
-      const formattedData: UserActivity = data?.data.data.sessions.map(
-        (session: SessionsUserActivity) => ({
-          ...session,
-          day: format(new Date(session.day), "d"),
-        })
-      );
-      setUserActivity({ ...data?.data.data, sessions: formattedData });
+    fetchUserDataActivityData(id).then((data) => {
+      setUserActivity(data);
     });
 
     const handleResize = () => {
@@ -36,7 +30,7 @@ const DashboardCharts = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div className="p-4 xl:mt-[10%] lg:pt-[3%]  bg-[#FBFBFB] w-fit">

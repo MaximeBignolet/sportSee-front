@@ -1,33 +1,16 @@
-import { User } from "../types/user.ts";
-import React, { useEffect, useState } from "react";
 import iconCalories from "../assets/icons/calories-icon.png";
 import iconProtein from "../assets/icons/protein-icon.png";
 import iconGlucide from "../assets/icons/carbs-icon.png";
 import iconLipide from "../assets/icons/fat-icon.png";
+import { User } from "../models/User";
 
 type SideCardProps = {
-  userData: User | null;
+  userData: User;
 };
 
 export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
-  const [calories, setCalories] = useState<string>("");
-
-  function convertCaloriesToUsLocales() {
-    if (userData?.keyData === undefined) {
-      return;
-    }
-
-    if (userData?.keyData.calorieCount > 1000) {
-      setCalories(userData.keyData.calorieCount.toLocaleString("en-US"));
-    }
-  }
-
-  useEffect(() => {
-    convertCaloriesToUsLocales();
-  });
-
   return (
-    <div className="mt-[7.3%] xl:ml-10 w-fit lg:grid lg:grid-cols-2 lg:gap-5 lg:w-full lg:ml-0 xl:flex xl:flex-col xl:justify-between">
+    <div className="mt-[7.3%] xl:ml-10 w-fit lg:grid lg:grid-cols-2 lg:gap-5 lg:w-full lg:ml-0 xl:flex xl:flex-col xl:justify-between xl:gap-7">
       <div className=" p-10 bg-[#FBFBFB] lg:max-h-[140px] rounded-lg">
         <div className={"flex items-center gap-6"}>
           <img
@@ -35,7 +18,9 @@ export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
             alt="Icon feu pour représenter les calories brulés"
           />
           <div className="flex flex-col">
-            <h2 className={"font-bold"}>{calories}kCal</h2>
+            <h2 className={"font-bold"}>
+              {userData.caloriesToLocales("en-US")}kCal
+            </h2>
             <p className="text-xs">Calories</p>
           </div>
         </div>
@@ -48,7 +33,7 @@ export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
             className="h-14"
           />
           <div className="flex flex-col">
-            <h2 className={"font-bold"}>{userData?.keyData.proteinCount}g</h2>
+            <h2 className={"font-bold"}>{userData.proteinCount}g</h2>
             <p className="text-xs">Proteines</p>
           </div>
         </div>
@@ -61,9 +46,7 @@ export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
             className="h-14"
           />
           <div className="flex flex-col">
-            <h2 className={"font-bold"}>
-              {userData?.keyData.carbohydrateCount}g
-            </h2>
+            <h2 className={"font-bold"}>{userData.carbohydrateCount}g</h2>
             <p className="text-xs">Glucides</p>
           </div>
         </div>
@@ -76,7 +59,7 @@ export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
             className="h-14"
           />
           <div className="flex flex-col">
-            <h2 className={"font-bold"}>{userData?.keyData.lipidCount}g</h2>
+            <h2 className={"font-bold"}>{userData.lipidCount}g</h2>
             <p className="text-xs">Lipides</p>
           </div>
         </div>

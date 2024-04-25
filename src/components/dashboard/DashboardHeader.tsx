@@ -1,8 +1,8 @@
 import React from "react";
-import { User } from "../../types/user";
+import { User } from "../../models/User";
 
 type DashboardHeaderProps = {
-  userData: User | null;
+  userData: User;
 };
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userData }) => {
@@ -12,7 +12,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userData }) => {
         <h2 className="text-5xl font-bold">
           Bonjour
           <span className="text-[#FF0101] font-medium inline-block ml-4">
-            {userData?.userInfos.firstName}
+            {userData.firstname}
           </span>
         </h2>
         <p className="pt-5">

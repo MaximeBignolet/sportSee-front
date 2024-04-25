@@ -1,28 +1,39 @@
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { useEffect, useState } from "react";
-import { User } from "../types/user";
 import { fetchUserData } from "../services/userServices.ts";
 import DashboardCharts from "../components/dashboard/DashboardCharts";
 import { SideCard } from "../components/SideCard.tsx";
 import DashboardCoMainCharts from "../components/dashboard/DashboardCoMainCharts.tsx";
+import { useParams } from "react-router-dom";
+import { User } from "../models/User.ts";
 
 const Home = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>();
+  const { id } = useParams();
 
   useEffect(() => {
-    fetchUserData(18).then((data) => {
-      setUser(data.data);
+    fetchUserData(id).then((data) => {
+      setUser(data);
     });
-  }, []);
+  }, [id]);
+
   return (
     <div className="container mx-auto xl:px-[6%] xl:pt-[5vh] lg:px-[4%]">
-      <DashboardHeader userData={user} />
-      <div className="xl:flex-row xl:items-start lg:flex lg:flex-col">
+      {user ? (
+        <DashboardHeader userData={user} />
+      ) : (
+        <p>Erreur dans la récupération des données</p>
+      )}
+      <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col">
         <div className="flex flex-col gap-5">
           <DashboardCharts />
           <DashboardCoMainCharts userData={user} />
         </div>
-        <SideCard userData={user} />
+        {user ? (
+          <SideCard userData={user} />
+        ) : (
+          <p>Erreur dans la récupération des données</p>
+        )}
       </div>
     </div>
   );

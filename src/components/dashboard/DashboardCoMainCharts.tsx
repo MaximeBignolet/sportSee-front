@@ -1,40 +1,25 @@
 import { useEffect, useState } from "react";
-import {
-  AverageUserSessionArray,
-  User,
-  UserAverageSession,
-} from "../../types/user.ts";
 import { fetchUserAverageSessions } from "../../services/userServices.ts";
 import { Line, LineChart, Tooltip, XAxis } from "recharts";
 import { DashboardRadar } from "./DashboardRadar.tsx";
 import DashboardPieChart from "./DashboardPieChart.tsx";
+import { useParams } from "react-router-dom";
+import { User, UserAverageSessions } from "../../models/User.ts";
 
 type DashboardCoMainProps = {
-  userData: User | null;
+  userData: User;
 };
 
 const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
   userData,
 }) => {
-  const [userSession, setUserSession] = useState<UserAverageSession | null>(
-    null
-  );
-
+  const [userSession, setUserSession] = useState<UserAverageSessions>();
+  const { id } = useParams();
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    fetchUserAverageSessions(18).then((data) => {
-      const daysMap = ["L", "M", "M", "J", "V", "S", "D"];
-      const sessionsWithFormattedDay = data?.data.data.sessions.map(
-        (session: AverageUserSessionArray) => ({
-          ...session,
-          day: daysMap[session.day - 1],
-        })
-      );
-      setUserSession({
-        ...data?.data.data,
-        sessions: sessionsWithFormattedDay,
-      });
+    fetchUserAverageSessions(id).then((data) => {
+      setUserSession(data);
     });
 
     const handleResize = () => {
@@ -46,7 +31,7 @@ const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [id]);
   return (
     <div className={"flex justify-between"}>
       <LineChart

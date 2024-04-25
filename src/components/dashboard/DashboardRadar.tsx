@@ -1,33 +1,26 @@
 import { useEffect, useState } from "react";
 import { fetchUserPerf } from "../../services/userServices.ts";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
+import { useParams } from "react-router-dom";
+import { UserPerfomance } from "../../models/User.ts";
 
 export const DashboardRadar = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<UserPerfomance>();
   const [width, setWidth] = useState(window.innerWidth);
-
+  const { id } = useParams();
   useEffect(() => {
-    fetchUserPerf(18).then((resp) => {
-      const rawData = resp?.data.data;
-      const kindMapping = rawData.kind;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const transformedData = rawData.data.map((el: any) => ({
-        ...el,
-        kind: kindMapping[el.kind],
-      }));
-      setData(transformedData);
+    fetchUserPerf(id).then((resp) => {
+      setData(resp);
     });
-
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
-
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div>
@@ -37,12 +30,12 @@ export const DashboardRadar = () => {
         outerRadius="80%"
         width={width > 1024 ? 300 : 250}
         height={width > 1024 ? 250 : 200}
-        data={data}
+        data={data?.data}
         style={{ background: "black", borderRadius: 6 }}
       >
         <PolarGrid />
         <PolarAngleAxis
-          dataKey="kind"
+          dataKey="kindDescription"
           fontSize={10}
           stroke="white"
           tickLine={false}
