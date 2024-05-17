@@ -6,6 +6,7 @@ import { SideCard } from "../components/SideCard.tsx";
 import DashboardCoMainCharts from "../components/dashboard/DashboardCoMainCharts.tsx";
 import { useParams } from "react-router-dom";
 import { User } from "../models/User.ts";
+import NotFound from "../components/NotFound.tsx";
 
 const Home = () => {
   const [user, setUser] = useState<User>();
@@ -20,27 +21,35 @@ const Home = () => {
   }, [id]);
 
   return (
-    <div className="container mx-auto xl:px-[6%] xl:pt-[5vh] lg:px-[4%]">
-      {user ? (
-        <DashboardHeader userData={user} />
-      ) : (
-        <p>Erreur dans la récupération des données</p>
-      )}
-      <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col">
-        <div className="flex flex-col gap-5">
-          <DashboardCharts />
+    <div>
+      {user?.id ? (
+        <div className="container mx-auto xl:px-[6%] xl:pt-[5vh] lg:px-[4%]">
           {user ? (
-            <DashboardCoMainCharts userData={user} />
+            <DashboardHeader userData={user} />
           ) : (
             <p>Erreur dans la récupération des données</p>
           )}
+          <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col">
+            <div className="flex flex-col gap-5">
+              <DashboardCharts />
+              {user ? (
+                <DashboardCoMainCharts userData={user} />
+              ) : (
+                <p>Erreur dans la récupération des données</p>
+              )}
+            </div>
+            {user ? (
+              <SideCard userData={user} />
+            ) : (
+              <p>Erreur dans la récupération des données</p>
+            )}
+          </div>
         </div>
-        {user ? (
-          <SideCard userData={user} />
-        ) : (
-          <p>Erreur dans la récupération des données</p>
-        )}
-      </div>
+      ) : (
+        <div className="h-screen w-screen flex flex-col items-center justify-center">
+          <NotFound />
+        </div>
+      )}
     </div>
   );
 };
