@@ -21,15 +21,15 @@ const Home = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="w-full">
       {user?.id ? (
-        <div className="container mx-auto xl:px-[6%] xl:pt-[5vh] lg:px-[4%]">
+        <div className="container mx-auto pt-10 lg:px-10 2xl:px-0 h-screen">
           {user ? (
             <DashboardHeader userData={user} />
           ) : (
             <p>Erreur dans la récupération des données</p>
           )}
-          <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col">
+          <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col w-full">
             <div className="flex flex-col gap-5">
               <DashboardCharts />
               {user ? (

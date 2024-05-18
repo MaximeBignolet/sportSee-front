@@ -145,12 +145,12 @@ export class UserPerfomance {
   data: Array<{ value: number; kind: number; kindDescription: string }>;
 
   static kindTranslations: { [key: string]: string } = {
-    cardio: "cardio",
-    energy: "énergie",
-    endurance: "endurance",
-    strength: "force",
-    speed: "vitesse",
     intensity: "intensité",
+    speed: "vitesse",
+    strength: "force",
+    endurance: "endurance",
+    energy: "énergie",
+    cardio: "cardio",
   };
 
   constructor(params: {
@@ -160,11 +160,29 @@ export class UserPerfomance {
   }) {
     this.userId = params.userId;
     this.kind = params.kind;
-    this.data = params.data;
+    this.data = params.data
+      .map((d) => ({
+        ...d,
+        kindDescription: UserPerfomance.kindTranslations[this.kind[d.kind]],
+      }))
+      .sort((a, b) => {
+        const order = Object.keys(UserPerfomance.kindTranslations);
+        return (
+          order.indexOf(this.kind[a.kind]) - order.indexOf(this.kind[b.kind])
+        );
+      });
   }
 
   static userPerfomanceFromJson(json: Record<string, any>): UserPerfomance {
-    const transformedData = json.data.map((item: any) => ({
+    const kindOrder = Object.keys(UserPerfomance.kindTranslations);
+    const sortedData = json.data.sort((a: any, b: any) => {
+      return (
+        kindOrder.indexOf(json.kind[a.kind].toLowerCase()) -
+        kindOrder.indexOf(json.kind[b.kind].toLowerCase())
+      );
+    });
+
+    const transformedData = sortedData.map((item: any) => ({
       value: item.value,
       kind: item.kind,
       kindDescription: UserPerfomance.kindTranslations[json.kind[item.kind]],

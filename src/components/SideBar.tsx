@@ -12,7 +12,7 @@ const SideBar = () => {
     { path: iconMuscle, id: 2, name: "Icône musculation" },
   ];
   return (
-    <div className="xl:h-[92.5vh] lg:h-screen bg-black lg:w-fit xl:w-28">
+    <div className="h-screen min-h-full  lg:w-fit xl:w-28">
       <nav className="h-2/3">
         <ul className="flex flex-col items-center justify-center h-full gap-5">
           {iconsItems.map((icon) => (
@@ -25,7 +25,7 @@ const SideBar = () => {
           ))}
         </ul>
       </nav>
-      <div className="h-1/3 flex items-end justify-center pb-36">
+      <div className="h-1/3 2xl:mt-44 lg:mt-20">
         <p className="text-white text-xs -rotate-90  whitespace-nowrap">
           Copyright, SportSee 2020
         </p>

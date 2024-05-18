@@ -1,13 +1,50 @@
-import { useEffect, useState } from "react";
-import { fetchUserAverageSessions } from "../../services/userServices.ts";
-import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
-import { DashboardRadar } from "./DashboardRadar.tsx";
-import DashboardPieChart from "./DashboardPieChart.tsx";
+import React, { useEffect, useState } from "react";
+import { fetchUserAverageSessions } from "../../services/userServices";
+import {
+  Line,
+  LineChart,
+  Rectangle,
+  Tooltip,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
+import { DashboardRadar } from "./DashboardRadar";
+import DashboardPieChart from "./DashboardPieChart";
 import { useParams } from "react-router-dom";
-import { User, UserAverageSessions } from "../../models/User.ts";
+import { User, UserAverageSessions } from "../../models/User";
 
 type DashboardCoMainProps = {
   userData: User;
+};
+
+export const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload?.length) {
+    return (
+      <div className="bg-white p-3">
+        {payload.slice(0, 1).map((el: any, index: number) => (
+          <div key={index}>
+            <small>{el.payload.sessionLength}min</small>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
+const CustomCursor = ({ points, width, height }: any) => {
+  const { x } = points[0];
+  return (
+    <Rectangle
+      x={x}
+      y={0}
+      width={width - x}
+      height={height}
+      fill="black"
+      opacity={0.2}
+    />
+  );
 };
 
 const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
@@ -33,51 +70,66 @@ const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
       window.removeEventListener("resize", handleResize);
     };
   }, [id]);
+
   return (
-    <div className={"flex justify-between"}>
-      <div className="relative">
-        <div className="absolute bg-black/20 z-10 w-[80px] h-[250px] right-0"></div>
+    <div className="flex justify-between">
+      <div
+        className="relative"
+        style={{
+          width: width > 1024 ? 350 : 230,
+          height: width > 1024 ? 250 : 200,
+        }}
+      >
         {userSession ? (
-          <LineChart
-            width={width > 1024 ? 280 : 230}
-            height={width > 1024 ? 250 : 200}
-            data={userSession?.sessions}
-            className="bg-[#F00]  p-3 rounded-md"
-          >
-            <text
-              x="35%"
-              y="7%"
-              textAnchor="middle"
-              style={{ fontWeight: 500 }}
-              fill={"rgba(255, 255, 255, 0.5)"}
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={userSession?.sessions}
+              className="bg-[#F00]  rounded-md"
             >
-              Durée moyenne{" "}
-              <tspan x="31%" dy="1.2em">
-                des sessions
-              </tspan>
-            </text>
-            <XAxis
-              dataKey="day"
-              tick={{ fill: "rgba(255, 255, 255, 0.5)" }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis
-              type="number"
-              domain={["dataMin", "dataMax + 15"]}
-              axisLine={false}
-              tickLine={false}
-              tick={false}
-              width={0}
-            />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="sessionLength"
-              stroke="white"
-              dot={false}
-            />
-          </LineChart>
+              <text
+                x="35%"
+                y="12%"
+                textAnchor="middle"
+                style={{ fontWeight: 500 }}
+                fill={"rgba(255, 255, 255, 0.5)"}
+              >
+                Durée moyenne{" "}
+                <tspan x="31%" dy="1.2em">
+                  des sessions
+                </tspan>
+              </text>
+              <XAxis
+                dataKey="day"
+                tick={{ fill: "rgba(255, 255, 255, 0.5)" }}
+                axisLine={false}
+                tickLine={false}
+                padding={{
+                  left: 15,
+                  right: 15,
+                }}
+              />
+              <YAxis
+                type="number"
+                domain={["dataMin - 10", "dataMax + 20"]}
+                axisLine={false}
+                tickLine={false}
+                tick={false}
+                width={0}
+              />
+              <Tooltip
+                content={<CustomTooltip payload={userSession.sessions} />}
+                cursor={<CustomCursor height={800} width={800} />}
+              />
+              <Line
+                type="monotone"
+                dataKey="sessionLength"
+                stroke="white"
+                dot={false}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </LineChart>
+          </ResponsiveContainer>
         ) : (
           <p>Erreur dans la récupération des sessions</p>
         )}

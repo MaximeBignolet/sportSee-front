@@ -12,6 +12,23 @@ import {
 import { useParams } from "react-router-dom";
 import { UserActivity } from "../../models/User.ts";
 
+export const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload?.length) {
+    return (
+      <div className="bg-[#F00] p-3">
+        {payload.slice(0, 1).map((el: any, index: number) => (
+          <div key={index}>
+            <small className="text-white">{el.payload.kilogram}kg</small> <br />
+            <br />
+            <small className="text-white">{el.payload.calories}Kcal</small>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
 const DashboardCharts = () => {
   const [userActivity, setUserActivity] = useState<UserActivity>();
   const [width, setWidth] = useState(window.innerWidth);
@@ -35,10 +52,10 @@ const DashboardCharts = () => {
   }, [id]);
 
   return (
-    <div className="p-4 xl:mt-[10%] lg:pt-[3%]  bg-[#FBFBFB] w-fit">
+    <div className="p-4 xl:mt-[10%] lg:mt-[5%]  bg-[#FBFBFB] w-fit">
       {userActivity ? (
         <BarChart
-          width={width > 1024 ? 900 : 750}
+          width={width < 1024 ? 400 : 1200}
           height={320}
           data={userActivity?.sessions}
         >
@@ -55,7 +72,15 @@ const DashboardCharts = () => {
             Activité quotidenne
           </text>
           <Legend verticalAlign="top" align="right" height={70} />
-          <Tooltip />
+          <Tooltip
+            content={
+              <CustomTooltip
+                active={false}
+                payload={userActivity.sessions}
+                label={""}
+              />
+            }
+          />
           <Bar
             dataKey="kilogram"
             name="Poids (kg)"

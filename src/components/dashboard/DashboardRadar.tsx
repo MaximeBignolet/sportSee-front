@@ -31,7 +31,7 @@ export const DashboardRadar = () => {
           cx="50%"
           cy="50%"
           outerRadius="80%"
-          width={width > 1024 ? 300 : 250}
+          width={width > 1024 ? 350 : 250}
           height={width > 1024 ? 250 : 200}
           data={data?.data}
           style={{ background: "black", borderRadius: 6 }}
@@ -39,7 +39,7 @@ export const DashboardRadar = () => {
           <PolarGrid />
           <PolarAngleAxis
             dataKey="kindDescription"
-            fontSize={10}
+            fontSize={15}
             stroke="white"
             tickLine={false}
           />
