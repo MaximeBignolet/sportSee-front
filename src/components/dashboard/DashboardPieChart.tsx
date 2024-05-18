@@ -31,19 +31,21 @@ const DashboardPieChart: React.FC<DashboardCoMainProps> = ({ userData }) => {
   const radius = width > 1024 ? 115 : 90;
 
   return (
-    <div className={"bg-[#FBFBFB] flex justify-center flex-col rounded-md"}>
+    <div
+      className={"bg-[#FBFBFB] flex justify-center flex-col mr-5 rounded-md"}
+    >
       {userData ? (
         <PieChart
-          width={width > 1024 ? 350 : 250}
-          height={width > 1024 ? 230 : 200}
+          width={width > 1163 ? 350 : 250}
+          height={width > 1163 ? 230 : 200}
         >
           <Pie
             data={data}
             dataKey="value"
             cx="50%"
             cy="50%"
-            innerRadius="90%"
-            outerRadius="100%"
+            innerRadius={0}
+            outerRadius={width > 1163 ? radius : radius - 30}
             startAngle={90}
             endAngle={-270}
           >
@@ -56,24 +58,24 @@ const DashboardPieChart: React.FC<DashboardCoMainProps> = ({ userData }) => {
             cx="50%"
             cy="50%"
             innerRadius={0}
-            outerRadius={radius - 15}
+            outerRadius={width > 1163 ? radius - 10 : radius - 40}
             fill="white"
             startAngle={90}
             endAngle={-270}
           />
           <text
             x={50}
-            y={10}
+            y={width > 1163 ? 10 : 20}
             textAnchor="middle"
             dominantBaseline="middle"
             fontWeight={700}
-            fontSize={18}
+            fontSize={width > 1163 ? 18 : 15}
           >
             Score
           </text>
           <text
-            x={width > 1024 ? 175 : 100}
-            y={width > 1024 ? 90 : 60}
+            x={width > 1163 ? 175 : 125}
+            y={width > 1163 ? 90 : 80}
             textAnchor="middle"
             dominantBaseline="middle"
           >
@@ -86,10 +88,10 @@ const DashboardPieChart: React.FC<DashboardCoMainProps> = ({ userData }) => {
                 Erreur dans la récupération des données
               </tspan>
             )}
-            <tspan x={width > 1024 ? 175 : 100} dy={20} fontSize={18}>
+            <tspan x={width > 1163 ? 175 : 125} dy={20} fontSize={18}>
               de votre
             </tspan>
-            <tspan x={width > 1024 ? 175 : 100} dy={20} fontSize={18}>
+            <tspan x={width > 1163 ? 175 : 125} dy={20} fontSize={18}>
               objectif
             </tspan>
           </text>

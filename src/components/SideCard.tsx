@@ -10,7 +10,7 @@ type SideCardProps = {
 
 export const SideCard: React.FC<SideCardProps> = ({ userData }) => {
   return (
-    <div className="mt-[7.3%] xl:ml-10 w-fit lg:grid lg:grid-cols-2 lg:gap-5 lg:w-full lg:ml-0 xl:flex xl:flex-col xl:justify-between xl:gap-7">
+    <div className="lg:my-5 2xl:my-0  w-fit lg:grid lg:grid-cols-2 lg:gap-5 lg:w-full lg:ml-0 min-h-full xl:flex xl:flex-col xl:justify-between xl:gap-7">
       <div className=" p-10 bg-[#FBFBFB] lg:max-h-[140px] rounded-lg">
         <div className={"flex items-center gap-6"}>
           <img

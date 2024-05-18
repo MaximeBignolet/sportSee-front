@@ -21,16 +21,16 @@ const Home = () => {
   }, [id]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {user?.id ? (
-        <div className="container mx-auto pt-10 lg:px-10 2xl:px-0 h-screen">
+        <div className="container mx-auto pt-10 lg:pl-10 px-0 h-max">
           {user ? (
             <DashboardHeader userData={user} />
           ) : (
             <p>Erreur dans la récupération des données</p>
           )}
-          <div className="2xl:flex-row 2xl:items-start xl:flex xl:flex-col w-full">
-            <div className="flex flex-col gap-5">
+          <div className="2xl:flex-row xl:flex xl:flex-col w-full h-full mt-[5%]">
+            <div className="flex flex-col justify-between lg:gap-10 2xl:gap-0">
               <DashboardCharts />
               {user ? (
                 <DashboardCoMainCharts userData={user} />
@@ -39,7 +39,9 @@ const Home = () => {
               )}
             </div>
             {user ? (
-              <SideCard userData={user} />
+              <div className="lg:pr-5 2xl:pr-0 2xl:h-[800px]">
+                <SideCard userData={user} />
+              </div>
             ) : (
               <p>Erreur dans la récupération des données</p>
             )}

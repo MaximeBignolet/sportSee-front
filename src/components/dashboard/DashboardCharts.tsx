@@ -39,24 +39,21 @@ const DashboardCharts = () => {
         setUserActivity(data);
       });
     }
-
     const handleResize = () => {
       setWidth(window.innerWidth);
     };
-
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [id]);
+  });
 
   return (
-    <div className="p-4 xl:mt-[10%] lg:mt-[5%]  bg-[#FBFBFB] w-fit">
+    <div className="p-4 mr-5  bg-[#FBFBFB] w-fit">
       {userActivity ? (
         <BarChart
-          width={width < 1024 ? 400 : 1200}
-          height={320}
+          width={width < 1163 ? 800 : 1200}
+          height={width < 1163 ? 320 : 400}
           data={userActivity?.sessions}
         >
           <CartesianGrid strokeDasharray="1 1" vertical={false} />
