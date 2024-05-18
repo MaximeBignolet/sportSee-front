@@ -77,7 +77,7 @@ const DashboardCoMainCharts: React.FC<DashboardCoMainProps> = ({
         className="relative"
         style={{
           width: width > 1024 ? 350 : 230,
-          height: width > 1024 ? 250 : 200,
+          height: width > 1024 ? 300 : 200,
         }}
       >
         {userSession ? (

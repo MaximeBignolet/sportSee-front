@@ -32,7 +32,7 @@ export const DashboardRadar = () => {
           cy="50%"
           outerRadius="80%"
           width={width > 1024 ? 350 : 250}
-          height={width > 1024 ? 250 : 200}
+          height={width > 1024 ? 300 : 200}
           data={data?.data}
           style={{ background: "black", borderRadius: 6 }}
         >
